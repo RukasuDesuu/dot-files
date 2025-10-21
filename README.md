@@ -2,6 +2,7 @@
 
 ## 1. Install Arch
 
+For more info, check: [Arch Wiki - Installation Guide](https://wiki.archlinux.org/title/Installation_guide)
 ## 2. Install Hyprland
 
 ## 3. Install Hyprpanel
