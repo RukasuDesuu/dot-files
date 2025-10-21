@@ -1,0 +1,35 @@
+{
+    "dashboard": {
+        "type": "dashboard"
+    },
+    "workspaces": {
+        "type": "workspaces"
+    },
+    "windowtitle": {
+        "type": "windowtitle"
+    },
+    "media": {
+        "type": "media"
+    },
+    "volume": {
+        "type": "volume"
+    },
+    "network": {
+        "type": "network"
+    },
+    "bluetooth": {
+        "type": "bluetooth"
+    },
+    "systray": {
+        "type": "systray"
+    },
+    "battery": {
+        "type": "battery"
+    },
+    "clock": {
+        "type": "clock"
+    },
+    "notifications": {
+        "type": "notifications"
+    }
+}
