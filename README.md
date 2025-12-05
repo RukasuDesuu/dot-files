@@ -9,13 +9,16 @@
 `# loadkeys <keymap>` (for example: `# loadkeys us-acentos`)
 
 - Set the text font
+
 `# setfont ter-132n` (change to other number for different sizes)
 
 - Verify the boot mode
+
 `# cat /sys/firmware/efi/fw_platform_size`
 > if the command returns an error, you are in BIOS mode. If it returns 32 or 64, you are in UEFI mode. (expected: 64, or on an VM it may return an error)
 
 - Connect to the internet
+
 run `# ip link` to check if you device is being listened
 `# iwctl` (for wireless connections)
 `[iwd]# device list` (to list network devices)
@@ -24,9 +27,12 @@ run `# ip link` to check if you device is being listened
 `[iwd]# station <device_name> connect <network_name>` (to connect to a network, will prompt for password if needed)
 `[iwd]# exit` (to exit iwctl)
 check connection status with `# ping ping.archlinux.org`
+
 - Update system clock
+
 `# timedatectl`
 - Partition the disk
+
 `# cfdisk`
 select 'gpt' if you are in UEFI mode, or 'MBR' if you are in BIOS mode.
 recommended partition for UEFI mode:
@@ -45,22 +51,26 @@ recommended partition for BIOS mode:
 write and exit cfdisk
 you can check the created partitions with `# lsblk`
 - Format the partitions
+
 `# mkfs.fat -F32 /dev/efi_system_partition` (only for UEFI mode)
 `# mkswap /dev/swap_partition`
 `# swapon /dev/swap_partition`
 `# mkfs.ext4 /dev/root_partition`
 
 - Mount the file systems
+
 `# mount /dev/root_partition /mnt`
 `# mkdir /mnt/boot` (only for UEFI mode)
 `# mount /dev/efi_system_partition /mnt/boot` (only for UEFI mode)
 list findmnt to verify mounts with `# findmnt`
 
 - Install essential packages
+
 Installing linux kernel, firmware and basic tools
 `# pacstrap /mnt base linux linux-firmware`
 
 - Configure the system
+
 Generate fstab file
 `# genfstab -U /mnt >> /mnt/etc/fstab`
 
@@ -73,13 +83,16 @@ Set the time zone
 `# ln -sf /usr/share/zoneinfo/Region/City /etc/localtime`  (change Region/City accordingly, America/Sao_Paulo for example) 
 `# hwclock --systohc`
 
+
 - Localization
+
 Edit the locale.gen file to uncomment your needed locales
 `# nano /etc/locale.gen`
 and generate them
 `# locale-gen`
 
 - Create the locale.conf file
+
 `# nano /etc/locale.conf`
 ```
 LANG=en_US.UTF-8
@@ -87,25 +100,32 @@ LANG=en_US.UTF-8
 (change if you use another locale)
 
 - persist keyboard layout across reboots
+
 `# nano /etc/vconsole.conf`
 ```
 KEYMAP=us-acentos
 ```
+(change if you use another layout)
 - Set the hostname
+
 `# nano /etc/hostname`
 
 - Set the root password
+
 `# passwd`
 
 - Configure the bootloader
+
 `# grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB` (for UEFI mode)
 `# grub-install --target=i386-pc /dev/sdX` (for BIOS mode, change sdX to your disk, like sda)
 `# grub-mkconfig -o /boot/grub/grub.cfg`
 
 - Enable NetworkManager service
+
 `# systemctl enable NetworkManager`
 
 - Create a new user
+
 `# useradd -mG wheel username` (change username accordingly)
 `# passwd username`
 `# nano /etc/sudoers` and uncomment the line
@@ -114,9 +134,11 @@ KEYMAP=us-acentos
 ```
 
 - Exit chroot environment
+
 `# exit`
 
 - Reboot the system
+
 `# reboot`
 
 For more info, check: [Arch Wiki - Installation Guide](https://wiki.archlinux.org/title/Installation_guide)
