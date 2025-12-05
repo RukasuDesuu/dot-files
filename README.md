@@ -27,17 +27,109 @@ check connection status with `# ping ping.archlinux.org`
 `# timedatectl`
 - Partition the disk
 `# cfdisk`
-recommended partition:
+select 'gpt' if you are in UEFI mode, or 'MBR' if you are in BIOS mode.
+recommended partition for UEFI mode:
 | Mount point on the installed system | Partition | Partition Type | Suggested Size |
 |-------------------------------------|-----------|----------------|----------------|
 | `/boot` | `/dev/efi_system_partition` | EFI System Partition | 1GiB |
 | `[SWAP]` | `/dev/swap_partition` | Linux swap | at least 4GiB |
 | / | /dev/root_partition | Linux x86-64 root(/) | Remainder of the device. At least 23–32 GiB. |
- 
+
+recommended partition for BIOS mode:
+| Mount point on the installed system | Partition | Partition Type | Suggested Size |
+|-------------------------------------|-----------|----------------|----------------|
+| `[SWAP]` | `/dev/swap_partition` | Linux swap | at least 4GiB |
+| / | /dev/root_partition | Linux x86-64 root(/) | Remainder of the device. At least 23–32 GiB. |
+
+write and exit cfdisk
+you can check the created partitions with `# lsblk`
+- Format the partitions
+`# mkfs.fat -F32 /dev/efi_system_partition` (only for UEFI mode)
+`# mkswap /dev/swap_partition`
+`# swapon /dev/swap_partition`
+`# mkfs.ext4 /dev/root_partition`
+
+- Mount the file systems
+`# mount /dev/root_partition /mnt`
+`# mkdir /mnt/boot` (only for UEFI mode)
+`# mount /dev/efi_system_partition /mnt/boot` (only for UEFI mode)
+list findmnt to verify mounts with `# findmnt`
+
+- Install essential packages
+Installing linux kernel, firmware and basic tools
+`# pacstrap /mnt base linux linux-firmware`
+
+- Configure the system
+Generate fstab file
+`# genfstab -U /mnt >> /mnt/etc/fstab`
+
+Chroot into the new system with `# arch-chroot /mnt`
+And proceed with the essential packages installation
+`# pacman -Syu grub efibootmgr networkmanager nano sudo git`
+
+
+Set the time zone
+`# ln -sf /usr/share/zoneinfo/Region/City /etc/localtime`  (change Region/City accordingly, America/Sao_Paulo for example) 
+`# hwclock --systohc`
+
+- Localization
+Edit the locale.gen file to uncomment your needed locales
+`# nano /etc/locale.gen`
+and generate them
+`# locale-gen`
+
+- Create the locale.conf file
+`# nano /etc/locale.conf`
+```
+LANG=en_US.UTF-8
+```
+(change if you use another locale)
+
+- persist keyboard layout across reboots
+`# nano /etc/vconsole.conf`
+```
+KEYMAP=us-acentos
+```
+- Set the hostname
+`# nano /etc/hostname`
+
+- Set the root password
+`# passwd`
+
+- Configure the bootloader
+`# grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB` (for UEFI mode)
+`# grub-install --target=i386-pc /dev/sdX` (for BIOS mode, change sdX to your disk, like sda)
+`# grub-mkconfig -o /boot/grub/grub.cfg`
+
+- Enable NetworkManager service
+`# systemctl enable NetworkManager`
+
+- Create a new user
+`# useradd -mG wheel username` (change username accordingly)
+`# passwd username`
+`# nano /etc/sudoers` and uncomment the line
+```
+%wheel ALL=(ALL) ALL
+```
+
+- Exit chroot environment
+`# exit`
+
+- Reboot the system
+`# reboot`
+
 For more info, check: [Arch Wiki - Installation Guide](https://wiki.archlinux.org/title/Installation_guide)
 
 ## 2. Install Hyprland
+First install an AUR helper, like yay:
+- `$ pacman -S --needed base-devel git`
+- `$ git clone https://aur.archlinux.org/yay.git`
+- `$ cd yay`
+- `$ makepkg -si`
+Then install Hyprland:
+- `$ yay -S hyprland-git`
 
+Follow the instructions on [Hyprland Wiki](https://wiki.hyprland.org/).
 ## 3. Install Hyprpanel
 
 (Probably i`ll change to waybar or quickshell)
