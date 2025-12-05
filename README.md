@@ -132,7 +132,7 @@ Then install Hyprland:
 Follow the instructions on [Hyprland Wiki](https://wiki.hyprland.org/).
 ## 3. Install Hyprpanel
 
-(Probably i`ll change to waybar or quickshell)
+(Probably i`ll change to [waybar](https://github.com/Alexays/Waybar) or [quickshell](https://github.com/username/quickshell) in the future) 
 ## 4. Export dot files config
 
 ## 5. Change config folders
