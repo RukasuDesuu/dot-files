@@ -4,6 +4,7 @@
 - Prepare an Arch Linuyx Installation Media (USB/DVD) with Arch ISO
 - Boot from the Installation Media
 - Set the keyboard layout if needed (standard is US)
+  
 `# localectl list-keymaps`
 `# loadkeys <keymap>` (for example: `# loadkeys us-acentos`)
 
