@@ -158,10 +158,12 @@ Then install Hyprland:
 Follow the instructions on [Hyprland Wiki](https://wiki.hyprland.org/).
 ## 3. Install Hyprpanel
 
+`$ yay -S ags-hyprpanel-git` 
+
 (Probably i`ll change to [waybar](https://github.com/Alexays/Waybar) or [quickshell](https://github.com/username/quickshell) in the future) 
 ## 4. Export dot files config
-
+`$ git clone https://github.com/RukasuDesuu/dot-files.git ~/.config/style` 
 ## 5. Change config folders
-
+`hyprland -c ~/.config/style/hypr/hyprland.conf
 ## 6. Install wallpaper
 Install **wallpaper.gif** and **wallpaper_static.png** from [This Drive](https://drive.google.com/drive/folders/1jc7Q7E3MQFgboO9pTSi3rd9tDr2yDWdE?usp=sharing)
