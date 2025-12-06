@@ -150,8 +150,11 @@ First install an AUR helper, like yay:
 - `$ cd yay`
 - `$ makepkg -si`
 Then install Hyprland:
+
 - `$ yay -S hyprland-git`
 
+## 3. Install Fundamental Packages
+- `$ pacman -S kitty gtk3 rofi dolphin`
 Follow the instructions on [Hyprland Wiki](https://wiki.hyprland.org/).
 ## 3. Install Hyprpanel
 
