@@ -154,18 +154,91 @@ Then install Hyprland:
 - `$ yay -S hyprland-git`
 
 ## 3. Install Fundamental Packages
-- `$ pacman -S kitty gtk3 rofi dolphin`
+- `$ pacman -S kitty gtk3 rofi dolphin swww`
 Follow the instructions on [Hyprland Wiki](https://wiki.hyprland.org/).
-## 3. Install Hyprpanel
+## 4. Install Quickshell / DankMaterialShell
+If you use DankMaterialShell:
+- Make sure to install `quickshell` and the required package `dms-shell-bin` (or build from your repository).
 
-`$ yay -S ags-hyprpanel-git` 
+## 5. Export/Deploy dotfiles (Import to System)
+To copy the configurations from this repository into your active `~/.config` directory:
 
-(Probably i`ll change to [waybar](https://github.com/Alexays/Waybar) or [quickshell](https://github.com/username/quickshell) in the future) 
-## 4. Export dot files config
-`$ git clone https://github.com/RukasuDesuu/dot-files.git ~/.config/style` 
+```bash
+# Clone this repository (if not already done)
+git clone https://github.com/RukasuDesuu/dot-files.git ~/.config/style
 
-`$ cp ~/.config/style/hypr/hyprland.conf ~/.config/hypr/hyprland.conf`
+# Deploy Hyprland config
+mkdir -p ~/.config/hypr
+cp ~/.config/style/hypr/hyprland.conf ~/.config/hypr/hyprland.conf
+cp ~/.config/style/hypr/spotify-playpause.sh ~/.config/hypr/spotify-playpause.sh
+chmod +x ~/.config/hypr/spotify-playpause.sh
 
-`$ cp ~/.config/style/hyprpanel ~/.config/hyprpanel -r`
-## 6. Install wallpaper
-Install **wallpaper.gif** and **wallpaper_static.png** from [This Drive](https://drive.google.com/drive/folders/1jc7Q7E3MQFgboO9pTSi3rd9tDr2yDWdE?usp=sharing)
+# Deploy Kitty config
+mkdir -p ~/.config/kitty
+cp -r ~/.config/style/kitty/* ~/.config/kitty/
+
+# Deploy DankMaterialShell settings
+mkdir -p ~/.config/DankMaterialShell
+cp ~/.config/style/DankMaterialShell/settings.json ~/.config/DankMaterialShell/settings.json
+
+# Deploy Fish config
+mkdir -p ~/.config/fish
+cp ~/.config/style/fish/config.fish ~/.config/fish/config.fish
+
+# Deploy Fuzzel config
+mkdir -p ~/.config/fuzzel
+cp ~/.config/style/fuzzel/fuzzel.ini ~/.config/fuzzel/fuzzel.ini
+
+# Deploy Cava config
+mkdir -p ~/.config/cava
+cp ~/.config/style/cava/config ~/.config/cava/config
+
+# Deploy Btop config
+mkdir -p ~/.config/btop
+cp -r ~/.config/style/btop/* ~/.config/btop/
+
+# Deploy GTK 3.0 & GTK 4.0 colors/styles
+mkdir -p ~/.config/gtk-3.0 ~/.config/gtk-4.0
+cp -r ~/.config/style/gtk-3.0/* ~/.config/gtk-3.0/
+cp -r ~/.config/style/gtk-4.0/* ~/.config/gtk-4.0/
+
+# Deploy Qt 5 & Qt 6 configs
+mkdir -p ~/.config/qt5ct ~/.config/qt6ct
+cp -r ~/.config/style/qt5ct/* ~/.config/qt5ct/
+cp -r ~/.config/style/qt6ct/* ~/.config/qt6ct/
+
+# Deploy Waybar config (optional)
+mkdir -p ~/.config/waybar
+cp -r ~/.config/style/waybar/* ~/.config/waybar/
+```
+
+## 6. How to Back Up Active Configurations (Export to Repo)
+Whenever you modify your local configurations and want to commit them back to this repository, run the following commands from the `~/.config/style` folder:
+
+```bash
+cd ~/.config/style
+
+# Pull active configs into the repository
+cp ~/.config/hypr/hyprland.conf ./hypr/
+cp ~/.config/hypr/spotify-playpause.sh ./hypr/
+cp -r ~/.config/kitty/* ./kitty/
+cp ~/.config/DankMaterialShell/settings.json ./DankMaterialShell/
+cp ~/.config/fish/config.fish ./fish/
+cp ~/.config/fuzzel/fuzzel.ini ./fuzzel/
+cp ~/.config/cava/config ./cava/
+cp -r ~/.config/btop/* ./btop/
+cp -r ~/.config/gtk-3.0/* ./gtk-3.0/
+cp -r ~/.config/gtk-4.0/* ./gtk-4.0/
+cp -r ~/.config/qt5ct/* ./qt5ct/
+cp -r ~/.config/qt6ct/* ./qt6ct/
+cp -r ~/.config/waybar/* ./waybar/
+
+# Stage and commit your changes
+git add .
+git commit -m "Update configurations"
+git push origin main
+```
+
+## 7. Install wallpaper
+Install **wallpaper.gif** and **wallpaper_static.png** from [This Drive](https://drive.google.com/drive/folders/1jc7Q7E3MQFgboO9pTSi3rd9tDr2yDWdE?usp=sharing) and place them in `~/.config/style/`.
+

@@ -1,0 +1,134 @@
+{
+    "layer": "bottom",
+    "position": "top",
+    "height": 30,
+
+    "modules-left": ["hyprland/workspaces", "hyprland/mode", "hyrpland/window"],
+    "modules-center": ["custom/spotify"],
+    "modules-right": ["tray", 
+                      //"custom/spotify",
+                      "custom/monitor", 
+                      "custom/weather", 
+                      //"custom/mail", 
+                      //"custom/storage", 
+                      //"backlight", 
+                      "pulseaudio", 
+                      "network", 
+                      "idle_inhibitor", 
+                      //"battery", 
+                      "clock"],
+    "hyprland/mode": {
+        "format": " {}"
+    },
+    "hyprland/workspaces": {
+        "format": "{name}",
+        "disable-scroll": true
+    },
+    "hyprland/window": {
+        "max-length": 80,
+        "tooltip": false
+    },
+
+    "clock": {
+        "format": "{:%a %d %b %H:%M:%S}",
+        "interval": 1,
+        "tooltip": false,
+
+        "on-click": "popup"
+    },
+
+    "battery": {
+        "format": "{capacity}% {icon}",
+        "format-alt": "{time} {icon}",
+        "format-icons": [" ", " ", " ", " ", " "],
+        "format-charging": "{capacity}%  ",
+        "interval": 30,
+        "states": {
+            "warning": 25,
+            "critical": 10
+        },
+        "tooltip": false
+    },
+    "network": {
+        "format": "{icon}",
+        "format-alt": "{ipaddr}/{cidr} {icon}",
+        "format-alt-click": "click-right",
+        "format-icons": {
+            "wifi": ["󰤯 ", "󰤟 " ,"󰤨 "],
+            "ethernet": ["󰈁 "],
+            "disconnected": ["󰱟 "]
+        },
+        "on-click": "termite -e nmtui",
+    "tooltip": false
+    },
+    "pulseaudio": {
+        "format": "{icon}",
+        "format-alt": "{volume} {icon}",
+        "format-alt-click": "click-right",
+        "format-muted": " 󰖁 ",
+        "format-icons": {
+            "phone": ["  ", "  ", "  "],
+            "default": [" ", " "," "]
+        },
+        "scroll-step": 10,
+        "on-click": "~/.config/waybar/modules/hypr-widget.sh --class pavucontrol --size 420x520 --anchor cursor --offset 0,-50 -- pavucontrol",
+        "tooltip": false
+    },
+    "custom/spotify": {
+        "interval": 1,
+        "return-type": "json",
+        "exec": "~/.config/waybar/modules/spotify.sh",
+        "exec-if": "pgrep spotify",
+        "escape": true
+    },
+    "custom/storage": {
+        "format": "{}  ",
+        "format-alt": "{percentage}%  ",
+        "format-alt-click": "click-right",
+        "return-type": "json",
+        "interval": 60,
+        "exec": "~/.config/waybar/modules/storage.sh"
+    },
+    "backlight": {
+        "format": "{icon}",
+        "format-alt": "{percent}% {icon}",
+        "format-alt-click": "click-right",
+        "format-icons": ["", ""],
+        "on-scroll-down": "light -A 1",
+        "on-scroll-up": "light -U 1"
+    },
+    "custom/weather": {
+        "format": "{}",
+        "format-alt": "{alt}: {}",
+        "format-alt-click": "click-right",
+        "interval": 1800,
+        "return-type": "json",
+        "exec": "~/.config/waybar/modules/weather.sh sao_jose_dos_campos",
+        "exec-if": "ping wttr.in -c1"
+    },
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": {
+            "activated": " ",
+            "deactivated": " "
+        },
+        "tooltip": false
+    },
+    "custom/mail": {
+        "format": "",
+        "format-alt": "{alt} ",
+        "format-alt-click": "click-right",
+        "interval": 60,
+        "return-type": "json",
+        "exec": "~/.config/waybar/modules/mail.py",
+        "tooltip": false
+    },
+    "custom/monitor": {
+    "format": "󰍛",
+    "tooltip": "Abrir widget",
+    "on-click": "kitty --class widget-pop -e btop"
+    },
+    "tray": {
+        "icon-size": 18
+    }
+}
